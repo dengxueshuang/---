@@ -106,64 +106,10 @@ pip install pyecharts jupyter
 7. **可视化混淆矩阵**：归一化后使用 Seaborn 绘制热力图，标注百分比。
 
 ---
-
 ## 可视化结果
 
-脚本完成后会弹出一幅混淆矩阵热力图，显示模型对三分类任务的预测准确度与混淆情况。如下所示：
+脚本运行结束后，会生成并展示归一化后的混淆矩阵热力图，以直观呈现模型在三分类任务上的预测效果：
 
-* **横轴**：模型预测标签
-* **纵轴**：真实标签
-* **颜色深浅**：归一化后的预测比例
+![Normalized Confusion Matrix](images/confusion_matrix.png)
 
-若需将该图表嵌入静态网页，可参考以下 ECharts 模板，将 `series.data` 替换为你的矩阵数据三元组：
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>虚假新闻检测数据可视化</title>
-    <script src="https://assets.pyecharts.org/assets/v5/echarts.min.js"></script>
-    <script src="https://assets.pyecharts.org/assets/v5/themes/chalk.js"></script>
-</head>
-<body>
-    <div id="heatmap" style="width:600px;height:400px;margin:0 auto;"></div>
-    <script>
-        var chart = echarts.init(document.getElementById('heatmap'), 'chalk');
-        var option = {
-            title: { text: 'Normalized Confusion Matrix', left: 'center' },
-            xAxis: { type: 'category', data: ['0','1','2'], name: 'Predicted' },
-            yAxis: { type: 'category', data: ['0','1','2'], name: 'Actual' },
-            visualMap: {
-                min: 0, max: 1, calculable: true,
-                orient: 'horizontal', left: 'center', bottom: '10%'
-            },
-            series: [{
-                type: 'heatmap',
-                data: [
-                    [0,0,0.95], [0,1,0.03], [0,2,0.02],
-                    [1,0,0.05], [1,1,0.90], [1,2,0.05],
-                    [2,0,0.02], [2,1,0.04], [2,2,0.94]
-                ],
-                label: {
-                    show: true,
-                    formatter: function (params) {
-                        return (params.value[2] * 100).toFixed(0) + '%';
-                    }
-                }
-            }]
-        };
-        chart.setOption(option);
-    </script>
-</body>
-</html>
-```
-
----
-
-## License
-
-本项目基于 MIT 许可证开源，详情见 [LICENSE](LICENSE) 文件。
-
-```
-```
+如果需要在网页中展示，也可以参考以下 ECharts 模板……
